@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChromaErase Pro - AI & In-Browser Background Remover</title>
-    <meta name="description" content="Remove backgrounds from images instantly online using in-browser smart canvas keying or cloud AI. Free, fast, privacy-focused image background remover with live background replacement.">
-    <meta name="keywords" content="background remover, remove bg, transparent background, image editing, canvas bg removal, free online bg remover">
+    <title>ChromaErase Pro v2.0 - AI & Canvas Background Removal Studio</title>
+    <meta name="description" content="Professional image background remover with manual erase & restore brushes, drop shadow generator, subject filters, HD export, and 100% in-browser privacy.">
+    <meta name="keywords" content="background remover, erase background, manual brush background remover, photo editor, transparent background, png exporter">
     
     <!-- OpenGraph Tags -->
-    <meta property="og:title" content="ChromaErase Pro - Background Removal Tool">
-    <meta property="og:description" content="Instant image background removal in your browser with live split-screen preview and background replacement suite.">
+    <meta property="og:title" content="ChromaErase Pro v2.0 - Background Removal Studio">
+    <meta property="og:description" content="Instant image background removal & touch-up studio with drop shadows, subject filters, and HD export.">
     <meta property="og:type" content="website">
 
     <!-- Fonts & Icons -->
@@ -20,8 +20,8 @@
 
     <style>
         :root {
-            --bg-dark: #0b0f19;
-            --surface-card: rgba(18, 24, 38, 0.75);
+            --bg-dark: #090d16;
+            --surface-card: rgba(15, 23, 42, 0.8);
             --surface-border: rgba(255, 255, 255, 0.1);
             --primary: #6366f1;
             --primary-hover: #4f46e5;
@@ -62,8 +62,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.25rem 2.5rem;
-            background: rgba(11, 15, 25, 0.8);
+            padding: 1.1rem 2.5rem;
+            background: rgba(9, 13, 22, 0.85);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--surface-border);
             position: sticky;
@@ -79,15 +79,15 @@
         }
 
         .brand-logo {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             box-shadow: 0 0 20px var(--primary-glow);
         }
 
@@ -100,19 +100,29 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .brand-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid var(--surface-border);
             color: var(--text-main);
-            padding: 0.6rem 1.2rem;
+            padding: 0.55rem 1.1rem;
             border-radius: 30px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -129,8 +139,8 @@
 
         /* Main Container Layout */
         .app-container {
-            max-width: 1280px;
-            margin: 2rem auto;
+            max-width: 1380px;
+            margin: 1.5rem auto;
             padding: 0 1.5rem;
             width: 100%;
             flex: 1;
@@ -139,7 +149,7 @@
         /* Hero Banner */
         .hero-section {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
         .hero-badge {
@@ -154,7 +164,6 @@
             font-size: 0.82rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            letter-spacing: 0.3px;
         }
 
         .hero-title {
@@ -167,8 +176,8 @@
 
         .hero-subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 640px;
+            font-size: 1.05rem;
+            max-width: 660px;
             margin: 0 auto 1.5rem;
             line-height: 1.6;
         }
@@ -223,7 +232,7 @@
             border: none;
             padding: 0.85rem 2.25rem;
             border-radius: 30px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             display: inline-flex;
@@ -237,7 +246,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
-            background: linear-gradient(135deg, #6366f1, #4338ca);
         }
 
         /* Sample Images Bar */
@@ -245,7 +253,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-top: 1.5rem;
             flex-wrap: wrap;
         }
@@ -276,26 +284,25 @@
             color: white;
         }
 
-        /* Main Workspace Grid (Hidden until image loaded) */
+        /* Main Studio Layout Grid */
         .workspace {
             display: none;
-            grid-template-columns: 1fr 340px;
-            gap: 1.75rem;
-            margin-top: 1.5rem;
+            grid-template-columns: 1fr 380px;
+            gap: 1.5rem;
         }
 
-        @media (max-width: 992px) {
+        @media (max-width: 1080px) {
             .workspace {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Canvas Preview Stage */
+        /* Canvas Viewport Stage */
         .stage-card {
             background: var(--surface-card);
             border: 1px solid var(--surface-border);
             border-radius: var(--radius-lg);
-            padding: 1.5rem;
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
             backdrop-filter: blur(20px);
@@ -310,45 +317,64 @@
             margin-bottom: 1rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid var(--surface-border);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .stage-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .view-mode-toggle {
+        /* Toolbar Top Bar */
+        .toolbar-group {
             display: flex;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            padding: 3px;
-            gap: 4px;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--surface-border);
         }
 
-        .toggle-btn {
+        .tool-icon-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: var(--transition-fast);
         }
 
-        .toggle-btn.active {
-            background: var(--primary);
+        .tool-icon-btn:hover {
             color: white;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Canvas Container & Split Slider */
+        .tool-icon-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .tool-icon-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Viewport Canvas Frame */
         .canvas-viewport {
-            min-height: 420px;
-            max-height: 560px;
+            min-height: 480px;
+            max-height: 600px;
             border-radius: var(--radius-md);
             overflow: hidden;
             position: relative;
@@ -363,13 +389,27 @@
                 linear-gradient(-45deg, transparent 75%, #2d3748 75%);
             background-size: 20px 20px;
             background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            user-select: none;
         }
 
-        .preview-canvas {
+        .main-render-canvas {
             max-width: 100%;
-            max-height: 520px;
+            max-height: 560px;
             object-fit: contain;
             display: block;
+            cursor: crosshair;
+        }
+
+        /* Cursor Brush Ring Overlay */
+        .brush-cursor-ring {
+            position: absolute;
+            border: 2px solid white;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.8), inset 0 0 4px rgba(0, 0, 0, 0.5);
+            display: none;
+            transform: translate(-50%, -50%);
+            z-index: 50;
         }
 
         /* Split Slider Overlay */
@@ -429,37 +469,52 @@
             pointer-events: none;
         }
 
-        /* Controls Panel */
+        /* Sidebar Control Panel */
         .control-panel {
             background: var(--surface-card);
             border: 1px solid var(--surface-border);
             border-radius: var(--radius-lg);
-            padding: 1.5rem;
+            padding: 1.25rem;
             backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1.1rem;
+            max-height: 800px;
+            overflow-y: auto;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .panel-title {
-            font-size: 1.05rem;
+        /* Control Panel Accordion / Sections */
+        .panel-section {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+        }
+
+        .section-header {
+            font-size: 0.9rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--surface-border);
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
         }
 
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
+            margin-bottom: 0.75rem;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
         }
 
         .control-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--text-muted);
             display: flex;
@@ -472,24 +527,24 @@
             cursor: pointer;
         }
 
-        /* Mode Selector Tabs */
+        /* Tab Switcher */
         .tab-selector {
             display: grid;
             grid-template-columns: 1fr 1fr;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 4px;
-            gap: 4px;
+            border-radius: 8px;
+            padding: 3px;
+            gap: 3px;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 0.55rem;
-            font-size: 0.82rem;
+            padding: 0.5rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: var(--transition-fast);
         }
@@ -497,10 +552,9 @@
         .tab-btn.active {
             background: var(--primary);
             color: white;
-            box-shadow: 0 4px 12px var(--primary-glow);
         }
 
-        /* Background Replacement Grid */
+        /* Background Swatches Grid */
         .bg-presets-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -515,7 +569,6 @@
             cursor: pointer;
             border: 2px solid transparent;
             transition: var(--transition-fast);
-            position: relative;
         }
 
         .bg-preset-swatch.active {
@@ -524,27 +577,43 @@
             box-shadow: 0 0 10px var(--accent-glow);
         }
 
-        /* Action Buttons */
-        .download-actions {
+        /* Export Action Suite */
+        .export-box {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-top: 0.5rem;
         }
 
+        .export-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .select-field {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--surface-border);
+            color: white;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            outline: none;
+        }
+
         .btn-success {
             background: linear-gradient(135deg, var(--accent), #059669);
             color: white;
             border: none;
-            padding: 0.9rem;
+            padding: 0.85rem;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: var(--transition-fast);
             box-shadow: 0 8px 20px var(--accent-glow);
         }
@@ -554,7 +623,7 @@
             box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
         }
 
-        /* API Modal */
+        /* Modal Overlay */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -588,7 +657,7 @@
         }
 
         .modal-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
         }
 
@@ -606,7 +675,6 @@
 
         .input-field:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 10px var(--primary-glow);
         }
 
         /* Notifications & Toast */
@@ -639,9 +707,9 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 1.75rem;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             border-top: 1px solid var(--surface-border);
             margin-top: 3rem;
         }
@@ -656,13 +724,14 @@
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
             </div>
             <span class="brand-title">ChromaErase Pro</span>
+            <span class="brand-tag">v2.0 Pro</span>
         </a>
         <div class="nav-actions">
             <button class="btn-secondary" id="apiKeySettingsBtn">
                 <i class="fa-solid fa-key"></i> Cloud API Key
             </button>
             <a href="https://github.com/Omkar4812x/Background-Removal-Tool" target="_blank" class="btn-secondary">
-                <i class="fa-brands fa-github"></i> GitHub Repository
+                <i class="fa-brands fa-github"></i> GitHub Repo
             </a>
         </div>
     </header>
@@ -673,10 +742,10 @@
         <!-- Hero Section -->
         <section class="hero-section" id="heroSection">
             <div class="hero-badge">
-                <i class="fa-solid fa-bolt"></i> 100% In-Browser & AI Cloud Engine
+                <i class="fa-solid fa-sparkles"></i> In-Browser Smart Canvas + Manual Touch-Up Studio
             </div>
-            <h1 class="hero-title">Remove Backgrounds Instantly</h1>
-            <p class="hero-subtitle">Fast, high-resolution background removal with live color keying, custom background replacement, and zero server upload requirement.</p>
+            <h1 class="hero-title">Professional Background Removal Studio</h1>
+            <p class="hero-subtitle">Extract subjects instantly with auto color keying, refine edges with manual Erase & Restore brushes, add drop shadows, and export in HD PNG/JPEG/WEBP.</p>
 
             <!-- Dropzone Container -->
             <div class="dropzone-card" id="dropzone">
@@ -685,15 +754,15 @@
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
                 <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">Drag & Drop your image here</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Supports PNG, JPG, WEBP up to 25MB</p>
+                <p style="color: var(--text-muted); font-size: 0.88rem;">Supports PNG, JPG, WEBP up to 25MB</p>
                 <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
-                    <i class="fa-solid fa-folder-open"></i> Browse File
+                    <i class="fa-solid fa-folder-open"></i> Browse Image File
                 </button>
             </div>
 
             <!-- Demo Sample Chips -->
             <div class="sample-bar">
-                <span class="sample-label">Or try a sample image:</span>
+                <span class="sample-label">Or try a sample demo:</span>
                 <button class="sample-chip" onclick="loadSampleImage('portrait')">
                     <i class="fa-solid fa-user"></i> Portrait Sample
                 </button>
@@ -706,25 +775,58 @@
             </div>
         </section>
 
-        <!-- Workspace Stage Grid (Hidden by default) -->
+        <!-- Studio Workspace Grid (Hidden by default) -->
         <section class="workspace" id="workspace">
             
-            <!-- Canvas Stage Card -->
+            <!-- Canvas Viewport Stage -->
             <div class="stage-card">
                 <div class="stage-header">
-                    <div class="stage-title">
-                        <i class="fa-solid fa-eye" style="color: var(--primary);"></i> Preview & Compare
+                    <!-- Tool Selectors Bar -->
+                    <div class="toolbar-group">
+                        <button class="tool-icon-btn active" id="toolSelectBtn" onclick="setActiveTool('select')" title="Auto Mode / View (M)">
+                            <i class="fa-solid fa-hand-pointer"></i>
+                        </button>
+                        <button class="tool-icon-btn" id="toolEraseBtn" onclick="setActiveTool('erase')" title="Manual Erase Brush (E)">
+                            <i class="fa-solid fa-eraser"></i>
+                        </button>
+                        <button class="tool-icon-btn" id="toolRestoreBtn" onclick="setActiveTool('restore')" title="Manual Restore Brush (B)">
+                            <i class="fa-solid fa-paintbrush"></i>
+                        </button>
                     </div>
-                    <div class="view-mode-toggle">
-                        <button class="toggle-btn active" id="viewProcessedBtn" onclick="setViewMode('processed')">Processed</button>
-                        <button class="toggle-btn" id="viewSplitBtn" onclick="setViewMode('split')">Split View</button>
-                        <button class="toggle-btn" id="viewOriginalBtn" onclick="setViewMode('original')">Original</button>
+
+                    <!-- History & Transform Bar -->
+                    <div class="toolbar-group">
+                        <button class="tool-icon-btn" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)" disabled>
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button class="tool-icon-btn" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Y)" disabled>
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                        <div style="width: 1px; height: 20px; background: var(--surface-border); margin: 0 4px;"></div>
+                        <button class="tool-icon-btn" onclick="flipImage('h')" title="Flip Horizontal">
+                            <i class="fa-solid fa-arrows-left-right"></i>
+                        </button>
+                        <button class="tool-icon-btn" onclick="flipImage('v')" title="Flip Vertical">
+                            <i class="fa-solid fa-arrows-up-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- View Modes -->
+                    <div class="toolbar-group">
+                        <button class="tool-icon-btn active" id="viewProcessedBtn" onclick="setViewMode('processed')" title="Processed Preview">
+                            <i class="fa-solid fa-image"></i>
+                        </button>
+                        <button class="tool-icon-btn" id="viewSplitBtn" onclick="setViewMode('split')" title="Before/After Split Slider">
+                            <i class="fa-solid fa-columns"></i>
+                        </button>
                     </div>
                 </div>
 
+                <!-- Canvas Viewport -->
                 <div class="canvas-viewport" id="canvasViewport">
-                    <canvas id="mainCanvas" class="preview-canvas"></canvas>
-                    
+                    <canvas id="mainCanvas" class="main-render-canvas"></canvas>
+                    <div class="brush-cursor-ring" id="brushRing"></div>
+
                     <!-- Split Comparison Container -->
                     <div class="comparison-slider-container" id="splitSlider">
                         <img id="splitOriginalImg" class="split-image-before" alt="Original">
@@ -740,40 +842,135 @@
 
             <!-- Controls Sidebar Panel -->
             <aside class="control-panel">
-                <div class="panel-title">
-                    <i class="fa-solid fa-sliders" style="color: var(--accent);"></i> Removal Controls
-                </div>
+                
+                <!-- Removal Engine & Auto Tolerance -->
+                <div class="panel-section">
+                    <div class="section-header">
+                        <span><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary);"></i> Auto Keying</span>
+                    </div>
 
-                <!-- Removal Engine Tab -->
-                <div class="control-group">
-                    <span class="control-label">Removal Engine</span>
-                    <div class="tab-selector">
-                        <button class="tab-btn active" id="engineClientBtn" onclick="setEngine('client')">Client Canvas</button>
-                        <button class="tab-btn" id="engineCloudBtn" onclick="setEngine('cloud')">Remove.bg API</button>
+                    <div class="control-group">
+                        <div class="tab-selector">
+                            <button class="tab-btn active" id="engineClientBtn" onclick="setEngine('client')">Client Canvas</button>
+                            <button class="tab-btn" id="engineCloudBtn" onclick="setEngine('cloud')">Remove.bg API</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="toleranceGroup">
+                        <div class="control-label">
+                            <span>Background Sensitivity</span>
+                            <span id="toleranceVal">35</span>
+                        </div>
+                        <input type="range" class="control-slider" id="toleranceSlider" min="5" max="100" value="35">
+                    </div>
+
+                    <div class="control-group" id="featherGroup">
+                        <div class="control-label">
+                            <span>Edge Smoothness</span>
+                            <span id="featherVal">2px</span>
+                        </div>
+                        <input type="range" class="control-slider" id="featherSlider" min="0" max="10" value="2">
                     </div>
                 </div>
 
-                <!-- Tolerance Slider (Client Engine) -->
-                <div class="control-group" id="toleranceGroup">
-                    <div class="control-label">
-                        <span>Background Sensitivity</span>
-                        <span id="toleranceVal">35</span>
+                <!-- Manual Touch-Up Brush Settings -->
+                <div class="panel-section" id="brushSettingsSection" style="display: none;">
+                    <div class="section-header">
+                        <span><i class="fa-solid fa-paintbrush" style="color: var(--accent);"></i> Brush Controls</span>
                     </div>
-                    <input type="range" class="control-slider" id="toleranceSlider" min="5" max="100" value="35">
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Brush Size</span>
+                            <span id="brushSizeVal">30px</span>
+                        </div>
+                        <input type="range" class="control-slider" id="brushSizeSlider" min="5" max="120" value="30">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Brush Hardness</span>
+                            <span id="brushHardnessVal">80%</span>
+                        </div>
+                        <input type="range" class="control-slider" id="brushHardnessSlider" min="10" max="100" value="80">
+                    </div>
                 </div>
 
-                <!-- Edge Smoothing Slider -->
-                <div class="control-group" id="featherGroup">
-                    <div class="control-label">
-                        <span>Edge Smoothness</span>
-                        <span id="featherVal">2px</span>
+                <!-- Subject Drop Shadow Suite -->
+                <div class="panel-section">
+                    <div class="section-header">
+                        <span><i class="fa-solid fa-sun" style="color: #f59e0b;"></i> Subject Drop Shadow</span>
+                        <input type="checkbox" id="shadowEnableToggle" style="accent-color: var(--primary); cursor: pointer;">
                     </div>
-                    <input type="range" class="control-slider" id="featherSlider" min="0" max="10" value="2">
+
+                    <div id="shadowControlsBox" style="display: none;">
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Shadow Blur</span>
+                                <span id="shadowBlurVal">15px</span>
+                            </div>
+                            <input type="range" class="control-slider" id="shadowBlurSlider" min="0" max="50" value="15">
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Offset X / Y</span>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="range" class="control-slider" id="shadowOffsetXSlider" min="-40" max="40" value="10">
+                                <input type="range" class="control-slider" id="shadowOffsetYSlider" min="-40" max="40" value="10">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Shadow Color & Opacity</span>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <input type="color" id="shadowColorPicker" value="#000000" style="width: 36px; height: 32px; border: none; border-radius: 6px; cursor: pointer; background: transparent;">
+                                <input type="range" class="control-slider" id="shadowOpacitySlider" min="0" max="100" value="50" style="flex: 1;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Background Replacement Section -->
-                <div class="control-group" style="margin-top: 0.5rem;">
-                    <span class="control-label">Replace Background</span>
+                <!-- Subject Image Filter Adjustments -->
+                <div class="panel-section">
+                    <div class="section-header">
+                        <span><i class="fa-solid fa-sliders" style="color: #ec4899;"></i> Image Filter Adjustments</span>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Brightness</span>
+                            <span id="brightVal">100%</span>
+                        </div>
+                        <input type="range" class="control-slider" id="brightSlider" min="50" max="150" value="100">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Contrast</span>
+                            <span id="contrastVal">100%</span>
+                        </div>
+                        <input type="range" class="control-slider" id="contrastSlider" min="50" max="150" value="100">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Saturation</span>
+                            <span id="saturateVal">100%</span>
+                        </div>
+                        <input type="range" class="control-slider" id="saturateSlider" min="0" max="200" value="100">
+                    </div>
+                </div>
+
+                <!-- Replace Background Suite -->
+                <div class="panel-section">
+                    <div class="section-header">
+                        <span><i class="fa-solid fa-layer-group" style="color: var(--accent);"></i> Replace Background</span>
+                    </div>
+
                     <div class="bg-presets-grid">
                         <div class="bg-preset-swatch active" style="background: repeating-conic-gradient(#334155 0% 25%, #1e293b 0% 50%) 50% / 12px 12px;" onclick="setBackgroundMode('transparent', this)" title="Transparent"></div>
                         <div class="bg-preset-swatch" style="background: #ffffff;" onclick="setBackgroundMode('solid', this, '#ffffff')" title="Pure White"></div>
@@ -781,24 +978,45 @@
                         <div class="bg-preset-swatch" style="background: linear-gradient(135deg, #6366f1, #ec4899);" onclick="setBackgroundMode('gradient', this, 'linear-gradient(135deg, #6366f1, #ec4899)')" title="Neon Gradient"></div>
                         <div class="bg-preset-swatch" style="background: linear-gradient(135deg, #10b981, #06b6d4);" onclick="setBackgroundMode('gradient', this, 'linear-gradient(135deg, #10b981, #06b6d4)')" title="Emerald Wave"></div>
                     </div>
-                    <div style="display: flex; gap: 8px; margin-top: 8px;">
-                        <input type="color" id="customColorPicker" value="#6366f1" style="width: 40px; height: 36px; border: none; border-radius: 6px; cursor: pointer; background: transparent;">
-                        <button class="btn-secondary" style="flex: 1; font-size: 0.8rem;" onclick="triggerCustomBgPicker()">
-                            <i class="fa-solid fa-image"></i> Upload Bg Image
+
+                    <div style="display: flex; gap: 8px; margin-top: 10px;">
+                        <input type="color" id="customColorPicker" value="#6366f1" style="width: 36px; height: 34px; border: none; border-radius: 6px; cursor: pointer; background: transparent;">
+                        <button class="btn-secondary" style="flex: 1; font-size: 0.8rem;" onclick="document.getElementById('bgImageInput').click()">
+                            <i class="fa-solid fa-image"></i> Custom Bg Image
                         </button>
                         <input type="file" id="bgImageInput" accept="image/*" style="display: none;">
                     </div>
                 </div>
 
-                <!-- Export & Actions -->
-                <div class="download-actions">
+                <!-- Export & Copy Clipboard Options -->
+                <div class="export-box">
+                    <div class="export-row">
+                        <select class="select-field" id="exportFormat">
+                            <option value="png">Format: PNG (Lossless)</option>
+                            <option value="jpeg">Format: JPEG</option>
+                            <option value="webp">Format: WEBP</option>
+                        </select>
+                        <select class="select-field" id="exportScale">
+                            <option value="1">Scale: 1x (Original)</option>
+                            <option value="2">Scale: 2x (HD Ultra)</option>
+                            <option value="4">Scale: 4x (4K Resolution)</option>
+                        </select>
+                    </div>
+
                     <button class="btn-success" id="downloadBtn">
-                        <i class="fa-solid fa-download"></i> Export Image (PNG)
+                        <i class="fa-solid fa-download"></i> Export Image File
                     </button>
-                    <button class="btn-secondary" style="justify-content: center;" onclick="resetWorkspace()">
-                        <i class="fa-solid fa-rotate-left"></i> Upload New Image
-                    </button>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <button class="btn-secondary" style="justify-content: center;" id="copyClipboardBtn">
+                            <i class="fa-solid fa-copy"></i> Copy to Clipboard
+                        </button>
+                        <button class="btn-secondary" style="justify-content: center;" onclick="resetWorkspace()">
+                            <i class="fa-solid fa-rotate-left"></i> New Image
+                        </button>
+                    </div>
                 </div>
+
             </aside>
         </section>
     </main>
@@ -811,7 +1029,7 @@
                 <button class="btn-secondary" style="padding: 0.3rem 0.6rem;" onclick="closeApiModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
-                To use Cloud AI background removal, enter your free Remove.bg API key. The key is stored locally in your browser.
+                Enter your free Remove.bg API key to enable cloud AI background removal. Key is saved locally in your browser.
             </p>
             <input type="text" class="input-field" id="apiKeyInput" placeholder="Paste your Remove.bg API Key here...">
             <div style="display: flex; justify-content: flex-end; gap: 10px;">
@@ -829,10 +1047,10 @@
 
     <!-- Footer -->
     <footer>
-        <p>ChromaErase Pro &copy; 2026. Part of the Open Source Web Applications Collection.</p>
+        <p>ChromaErase Pro v2.0 &copy; 2026. Open Source Background Removal Studio.</p>
     </footer>
 
-    <!-- Application Script -->
+    <!-- Application Engine Script -->
     <script>
         // DOM Elements
         const dropzone = document.getElementById('dropzone');
@@ -845,24 +1063,53 @@
         const splitSlider = document.getElementById('splitSlider');
         const splitAfterWrap = document.getElementById('splitAfterWrap');
         const sliderHandle = document.getElementById('sliderHandle');
+        const brushRing = document.getElementById('brushRing');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
+
+        // Sliders & Inputs
         const toleranceSlider = document.getElementById('toleranceSlider');
         const toleranceVal = document.getElementById('toleranceVal');
         const featherSlider = document.getElementById('featherSlider');
         const featherVal = document.getElementById('featherVal');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const toast = document.getElementById('toast');
-        const toastMsg = document.getElementById('toastMsg');
+        const brushSizeSlider = document.getElementById('brushSizeSlider');
+        const brushSizeVal = document.getElementById('brushSizeVal');
+        const brushHardnessSlider = document.getElementById('brushHardnessSlider');
+        const brushHardnessVal = document.getElementById('brushHardnessVal');
 
-        // State variables
+        // Shadow & Filters Controls
+        const shadowEnableToggle = document.getElementById('shadowEnableToggle');
+        const shadowBlurSlider = document.getElementById('shadowBlurSlider');
+        const shadowOffsetXSlider = document.getElementById('shadowOffsetXSlider');
+        const shadowOffsetYSlider = document.getElementById('shadowOffsetYSlider');
+        const shadowColorPicker = document.getElementById('shadowColorPicker');
+        const shadowOpacitySlider = document.getElementById('shadowOpacitySlider');
+
+        const brightSlider = document.getElementById('brightSlider');
+        const contrastSlider = document.getElementById('contrastSlider');
+        const saturateSlider = document.getElementById('saturateSlider');
+
+        // State Variables
         let originalImage = null;
-        let processedCanvas = document.createElement('canvas');
-        let currentEngine = 'client'; // 'client' or 'cloud'
+        let maskCanvas = document.createElement('canvas'); // Alpha mask layer
+        let processedCanvas = document.createElement('canvas'); // Temp output canvas
+        
+        let activeTool = 'select'; // 'select', 'erase', 'restore'
+        let currentEngine = 'client'; // 'client', 'cloud'
         let currentBgMode = 'transparent'; // 'transparent', 'solid', 'gradient', 'image'
         let bgStyleValue = '';
         let customBgImage = null;
         let removeBgApiKey = localStorage.getItem('remove_bg_api_key') || '';
 
-        // Initialize Event Listeners
+        let flipH = false;
+        let flipV = false;
+
+        // Undo / Redo History Stack
+        const historyStack = [];
+        let historyIndex = -1;
+        const MAX_HISTORY = 20;
+
+        // Initialize Application
         function init() {
             // Drag and Drop
             ['dragenter', 'dragover'].forEach(name => {
@@ -888,23 +1135,50 @@
                 if (e.target.files[0]) handleFileUpload(e.target.files[0]);
             });
 
-            // Sliders
+            // Slider Listeners
             toleranceSlider.addEventListener('input', (e) => {
                 toleranceVal.textContent = e.target.value;
-                if (originalImage && currentEngine === 'client') processClientRemoval();
+                if (originalImage && currentEngine === 'client') {
+                    processClientRemoval();
+                    saveState();
+                }
             });
 
             featherSlider.addEventListener('input', (e) => {
                 featherVal.textContent = e.target.value + 'px';
-                if (originalImage && currentEngine === 'client') processClientRemoval();
+                if (originalImage && currentEngine === 'client') renderMainStage();
             });
 
-            // Custom Color Picker
+            brushSizeSlider.addEventListener('input', (e) => {
+                brushSizeVal.textContent = e.target.value + 'px';
+                updateBrushRingSize();
+            });
+
+            brushHardnessSlider.addEventListener('input', (e) => {
+                brushHardnessVal.textContent = e.target.value + '%';
+            });
+
+            // Shadow & Filters listeners
+            shadowEnableToggle.addEventListener('change', (e) => {
+                document.getElementById('shadowControlsBox').style.display = e.target.checked ? 'block' : 'none';
+                renderMainStage();
+            });
+
+            [shadowBlurSlider, shadowOffsetXSlider, shadowOffsetYSlider, shadowColorPicker, shadowOpacitySlider, brightSlider, contrastSlider, saturateSlider].forEach(input => {
+                input.addEventListener('input', () => {
+                    document.getElementById('shadowBlurVal').textContent = shadowBlurSlider.value + 'px';
+                    document.getElementById('brightVal').textContent = brightSlider.value + '%';
+                    document.getElementById('contrastVal').textContent = contrastSlider.value + '%';
+                    document.getElementById('saturateVal').textContent = saturateSlider.value + '%';
+                    renderMainStage();
+                });
+            });
+
+            // Color Pickers
             document.getElementById('customColorPicker').addEventListener('input', (e) => {
                 setBackgroundMode('solid', null, e.target.value);
             });
 
-            // Custom BG Image Picker
             document.getElementById('bgImageInput').addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
@@ -921,49 +1195,122 @@
                 }
             });
 
-            // Download Handler
-            downloadBtn.addEventListener('click', downloadResult);
+            // Actions & Export
+            document.getElementById('downloadBtn').addEventListener('click', downloadResult);
+            document.getElementById('copyClipboardBtn').addEventListener('click', copyToClipboard);
 
-            // API Modal
+            // API Settings Modal
             document.getElementById('apiKeySettingsBtn').addEventListener('click', () => {
                 document.getElementById('apiKeyInput').value = removeBgApiKey;
                 document.getElementById('apiModal').style.display = 'flex';
             });
 
-            // Split View Slider Dragging
-            let isDraggingSlider = false;
+            // Canvas Manual Brush & Mouse Interaction
+            setupCanvasBrushEvents();
+            setupKeyboardShortcuts();
+            setupSplitSlider();
+        }
+
+        // Setup Manual Canvas Brush Drawing
+        let isDrawing = false;
+        function setupCanvasBrushEvents() {
             const viewport = document.getElementById('canvasViewport');
-            
-            viewport.addEventListener('mousedown', (e) => {
-                if (document.getElementById('splitSlider').style.display === 'block') {
-                    isDraggingSlider = true;
-                    updateSplitPosition(e);
+
+            mainCanvas.addEventListener('mouseenter', () => {
+                if (activeTool === 'erase' || activeTool === 'restore') {
+                    brushRing.style.display = 'block';
+                    updateBrushRingSize();
                 }
             });
 
-            window.addEventListener('mousemove', (e) => {
-                if (isDraggingSlider) updateSplitPosition(e);
+            mainCanvas.addEventListener('mouseleave', () => {
+                brushRing.style.display = 'none';
+                isDrawing = false;
+            });
+
+            mainCanvas.addEventListener('mousemove', (e) => {
+                if (activeTool === 'erase' || activeTool === 'restore') {
+                    const rect = mainCanvas.getBoundingClientRect();
+                    brushRing.style.left = e.clientX + 'px';
+                    brushRing.style.top = e.clientY + 'px';
+
+                    if (isDrawing) applyBrushStroke(e);
+                }
+            });
+
+            mainCanvas.addEventListener('mousedown', (e) => {
+                if (activeTool === 'erase' || activeTool === 'restore') {
+                    isDrawing = true;
+                    applyBrushStroke(e);
+                }
             });
 
             window.addEventListener('mouseup', () => {
-                isDraggingSlider = false;
+                if (isDrawing) {
+                    isDrawing = false;
+                    saveState();
+                }
             });
         }
 
-        function updateSplitPosition(e) {
-            const rect = canvasViewport.getBoundingClientRect();
-            let x = e.clientX - rect.left;
-            if (x < 0) x = 0;
-            if (x > rect.width) x = rect.width;
-            const pct = (x / rect.width) * 100;
-            splitAfterWrap.style.width = pct + '%';
-            sliderHandle.style.left = pct + '%';
+        function updateBrushRingSize() {
+            const size = parseInt(brushSizeSlider.value, 10);
+            brushRing.style.width = size + 'px';
+            brushRing.style.height = size + 'px';
+            brushRing.style.borderColor = activeTool === 'erase' ? '#ef4444' : '#10b981';
+        }
+
+        function applyBrushStroke(e) {
+            if (!maskCanvas || !originalImage) return;
+
+            const rect = mainCanvas.getBoundingClientRect();
+            const scaleX = maskCanvas.width / rect.width;
+            const scaleY = maskCanvas.height / rect.height;
+
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+
+            const radius = (parseInt(brushSizeSlider.value, 10) / 2) * scaleX;
+            const hardness = parseInt(brushHardnessSlider.value, 10) / 100;
+
+            const ctx = maskCanvas.getContext('2d');
+            ctx.save();
+
+            const grad = ctx.createRadialGradient(x, y, radius * hardness, x, y, radius);
+            if (activeTool === 'erase') {
+                grad.addColorStop(0, 'rgba(0,0,0,1)');
+                grad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.globalCompositeOperation = 'destination-out';
+            } else {
+                grad.addColorStop(0, 'rgba(255,255,255,1)');
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.globalCompositeOperation = 'source-over';
+            }
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            renderMainStage();
+        }
+
+        // Active Tool Switcher
+        function setActiveTool(tool) {
+            activeTool = tool;
+            document.getElementById('toolSelectBtn').classList.toggle('active', tool === 'select');
+            document.getElementById('toolEraseBtn').classList.toggle('active', tool === 'erase');
+            document.getElementById('toolRestoreBtn').classList.toggle('active', tool === 'restore');
+
+            document.getElementById('brushSettingsSection').style.display = (tool === 'erase' || tool === 'restore') ? 'block' : 'none';
+            mainCanvas.style.cursor = tool === 'select' ? 'default' : 'crosshair';
         }
 
         // File Upload Handler
         function handleFileUpload(file) {
             if (!file.type.startsWith('image/')) {
-                showToast('Please upload a valid image file (PNG, JPG, WEBP).', 'error');
+                showToast('Please upload a valid image file.', 'error');
                 return;
             }
 
@@ -976,6 +1323,14 @@
                     splitOriginalImg.src = img.src;
                     heroSection.style.display = 'none';
                     workspace.style.display = 'grid';
+                    
+                    // Reset Mask Canvas
+                    maskCanvas.width = img.width;
+                    maskCanvas.height = img.height;
+                    const mCtx = maskCanvas.getContext('2d');
+                    mCtx.fillStyle = '#ffffff';
+                    mCtx.fillRect(0, 0, img.width, img.height);
+
                     processImage();
                 };
                 img.src = e.target.result;
@@ -1011,80 +1366,72 @@
                 splitOriginalImg.src = img.src;
                 heroSection.style.display = 'none';
                 workspace.style.display = 'grid';
+                
+                maskCanvas.width = img.width;
+                maskCanvas.height = img.height;
+                const mCtx = maskCanvas.getContext('2d');
+                mCtx.fillStyle = '#ffffff';
+                mCtx.fillRect(0, 0, img.width, img.height);
+
                 processImage();
             };
             img.src = 'data:image/svg+xml;base64,' + btoa(svgString);
         }
 
-        // Process Image Decision
+        // Process Removal Decision
         function processImage() {
             if (currentEngine === 'client') {
                 processClientRemoval();
             } else {
                 processCloudRemoval();
             }
+            saveState();
         }
 
-        // In-Browser Client Canvas Background Removal Engine
+        // Client Removal Keying Algorithm
         function processClientRemoval() {
             if (!originalImage) return;
 
-            const w = originalImage.naturalWidth || originalImage.width;
-            const h = originalImage.naturalHeight || originalImage.height;
+            const w = originalImage.width;
+            const h = originalImage.height;
 
-            // Setup processing canvas
-            processedCanvas.width = w;
-            processedCanvas.height = h;
-            const ctx = processedCanvas.getContext('2d');
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = w;
+            tempCanvas.height = h;
+            const ctx = tempCanvas.getContext('2d');
             ctx.drawImage(originalImage, 0, 0);
 
             const imgData = ctx.getImageData(0, 0, w, h);
             const data = imgData.data;
 
-            // Sample corner pixels to determine background key color
-            const corners = [
-                [0, 0],
-                [w - 1, 0],
-                [0, h - 1],
-                [w - 1, h - 1]
-            ];
-
+            // Sample corner pixels
+            const corners = [[0, 0], [w - 1, 0], [0, h - 1], [w - 1, h - 1]];
             let bgR = 0, bgG = 0, bgB = 0;
             corners.forEach(([x, y]) => {
                 const idx = (y * w + x) * 4;
-                bgR += data[idx];
-                bgG += data[idx + 1];
-                bgB += data[idx + 2];
+                bgR += data[idx]; bgG += data[idx + 1]; bgB += data[idx + 2];
             });
-            bgR = Math.round(bgR / 4);
-            bgG = Math.round(bgG / 4);
-            bgB = Math.round(bgB / 4);
+            bgR = Math.round(bgR / 4); bgG = Math.round(bgG / 4); bgB = Math.round(bgB / 4);
 
             const tolerance = parseInt(toleranceSlider.value, 10);
-            const feather = parseInt(featherSlider.value, 10);
 
-            // Color Euclidean Distance Keying
+            // Update Mask Canvas based on auto keying
+            const mCtx = maskCanvas.getContext('2d');
+            const maskData = mCtx.getImageData(0, 0, w, h);
+            const mPixels = maskData.data;
+
             for (let i = 0; i < data.length; i += 4) {
-                const r = data[i];
-                const g = data[i + 1];
-                const b = data[i + 2];
-
-                const distance = Math.sqrt(
-                    (r - bgR) ** 2 +
-                    (g - bgG) ** 2 +
-                    (b - bgB) ** 2
-                );
+                const r = data[i], g = data[i + 1], b = data[i + 2];
+                const distance = Math.sqrt((r - bgR) ** 2 + (g - bgG) ** 2 + (b - bgB) ** 2);
 
                 if (distance < tolerance) {
-                    data[i + 3] = 0; // Set Alpha to 0
-                } else if (distance < tolerance + feather * 8) {
-                    // Smooth alpha transition
-                    const alphaRatio = (distance - tolerance) / (feather * 8);
-                    data[i + 3] = Math.floor(alphaRatio * 255);
+                    mPixels[i + 3] = 0; // Transparent
+                } else {
+                    mPixels[i + 3] = 255;
                 }
             }
 
-            ctx.putImageData(imgData, 0, 0);
+            mCtx.putImageData(maskData, 0, 0);
             renderMainStage();
         }
 
@@ -1099,17 +1446,15 @@
 
             showToast('Processing via Remove.bg Cloud AI...', 'info');
 
-            // Convert canvas to blob for form data
             const tempCanvas = document.createElement('canvas');
             tempCanvas.width = originalImage.width;
             tempCanvas.height = originalImage.height;
             tempCanvas.getContext('2d').drawImage(originalImage, 0, 0);
-            
+
             tempCanvas.toBlob(async (blob) => {
                 try {
                     const formData = new FormData();
                     formData.append('image_file', blob, 'upload.png');
-                    formData.append('size', 'auto');
 
                     const res = await fetch('https://api.remove.bg/v1.0/removebg', {
                         method: 'POST',
@@ -1117,67 +1462,116 @@
                         body: formData
                     });
 
-                    if (!res.ok) throw new Error('API request failed. Check key & quota.');
+                    if (!res.ok) throw new Error('Cloud API request failed. Verify API key.');
 
                     const resBlob = await res.blob();
                     const imgUrl = URL.createObjectURL(resBlob);
                     const cloudImg = new Image();
                     cloudImg.onload = () => {
-                        processedCanvas.width = cloudImg.width;
-                        processedCanvas.height = cloudImg.height;
-                        processedCanvas.getContext('2d').drawImage(cloudImg, 0, 0);
+                        const mCtx = maskCanvas.getContext('2d');
+                        mCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+                        mCtx.drawImage(cloudImg, 0, 0);
                         renderMainStage();
-                        showToast('Background removed via Cloud AI!', 'success');
+                        saveState();
+                        showToast('Cloud AI background removal completed!', 'success');
                     };
                     cloudImg.src = imgUrl;
 
                 } catch (err) {
-                    showToast(err.message || 'Cloud removal error', 'error');
+                    showToast(err.message || 'Error running Cloud AI removal', 'error');
                     setEngine('client');
                 }
             }, 'image/png');
         }
 
-        // Render Final Composite Canvas on Stage
+        // Render Final Composite Canvas on Viewport Stage
         function renderMainStage() {
             if (!originalImage) return;
 
-            const w = processedCanvas.width;
-            const h = processedCanvas.height;
+            const w = originalImage.width;
+            const h = originalImage.height;
 
-            mainCanvas.width = w;
-            mainCanvas.height = h;
-            splitCanvas.width = w;
-            splitCanvas.height = h;
+            mainCanvas.width = w; mainCanvas.height = h;
+            splitCanvas.width = w; splitCanvas.height = h;
 
             const ctx = mainCanvas.getContext('2d');
             const splitCtx = splitCanvas.getContext('2d');
 
-            ctx.clearRect(0, 0, w, h);
-            splitCtx.clearRect(0, 0, w, h);
+            ctx.save(); splitCtx.save();
+            ctx.clearRect(0, 0, w, h); splitCtx.clearRect(0, 0, w, h);
 
-            // Draw Background according to selected mode
+            // Apply Flips
+            if (flipH || flipV) {
+                ctx.translate(flipH ? w : 0, flipV ? h : 0);
+                ctx.scale(flipH ? -1 : 1, flipV ? -1 : 1);
+                splitCtx.translate(flipH ? w : 0, flipV ? h : 0);
+                splitCtx.scale(flipH ? -1 : 1, flipV ? -1 : 1);
+            }
+
+            // Draw Selected Background
+            drawBackground(ctx, w, h);
+            drawBackground(splitCtx, w, h);
+
+            // Create Extracted Subject Canvas
+            const subjectCanvas = document.createElement('canvas');
+            subjectCanvas.width = w; subjectCanvas.height = h;
+            const subCtx = subjectCanvas.getContext('2d');
+
+            // Apply Filters (Brightness, Contrast, Saturation)
+            const bright = brightSlider.value;
+            const contrast = contrastSlider.value;
+            const saturate = saturateSlider.value;
+            subCtx.filter = `brightness(${bright}%) contrast(${contrast}%) saturate(${saturate}%)`;
+
+            subCtx.drawImage(originalImage, 0, 0);
+            subCtx.globalCompositeOperation = 'destination-in';
+            subCtx.drawImage(maskCanvas, 0, 0);
+
+            // Drop Shadow Generation
+            if (shadowEnableToggle.checked) {
+                ctx.save(); splitCtx.save();
+                const shadowBlur = parseInt(shadowBlurSlider.value, 10);
+                const offsetX = parseInt(shadowOffsetXSlider.value, 10);
+                const offsetY = parseInt(shadowOffsetYSlider.value, 10);
+                const opacity = parseInt(shadowOpacitySlider.value, 10) / 100;
+                
+                ctx.shadowColor = shadowColorPicker.value;
+                ctx.shadowBlur = shadowBlur;
+                ctx.shadowOffsetX = offsetX;
+                ctx.shadowOffsetY = offsetY;
+                ctx.globalAlpha = opacity;
+
+                splitCtx.shadowColor = shadowColorPicker.value;
+                splitCtx.shadowBlur = shadowBlur;
+                splitCtx.shadowOffsetX = offsetX;
+                splitCtx.shadowOffsetY = offsetY;
+                splitCtx.globalAlpha = opacity;
+
+                ctx.drawImage(subjectCanvas, 0, 0);
+                splitCtx.drawImage(subjectCanvas, 0, 0);
+                ctx.restore(); splitCtx.restore();
+            }
+
+            // Draw Subject over background
+            ctx.drawImage(subjectCanvas, 0, 0);
+            splitCtx.drawImage(subjectCanvas, 0, 0);
+
+            ctx.restore(); splitCtx.restore();
+        }
+
+        function drawBackground(ctx, w, h) {
             if (currentBgMode === 'solid') {
                 ctx.fillStyle = bgStyleValue;
                 ctx.fillRect(0, 0, w, h);
-                splitCtx.fillStyle = bgStyleValue;
-                splitCtx.fillRect(0, 0, w, h);
             } else if (currentBgMode === 'gradient') {
                 const grad = ctx.createLinearGradient(0, 0, w, h);
                 grad.addColorStop(0, '#6366f1');
                 grad.addColorStop(1, '#10b981');
                 ctx.fillStyle = grad;
                 ctx.fillRect(0, 0, w, h);
-                splitCtx.fillStyle = grad;
-                splitCtx.fillRect(0, 0, w, h);
             } else if (currentBgMode === 'image' && customBgImage) {
                 ctx.drawImage(customBgImage, 0, 0, w, h);
-                splitCtx.drawImage(customBgImage, 0, 0, w, h);
             }
-
-            // Draw Subject Image
-            ctx.drawImage(processedCanvas, 0, 0);
-            splitCtx.drawImage(processedCanvas, 0, 0);
         }
 
         // Set Engine Mode
@@ -1185,28 +1579,19 @@
             currentEngine = engine;
             document.getElementById('engineClientBtn').classList.toggle('active', engine === 'client');
             document.getElementById('engineCloudBtn').classList.toggle('active', engine === 'cloud');
-            
             document.getElementById('toleranceGroup').style.display = engine === 'client' ? 'flex' : 'none';
             document.getElementById('featherGroup').style.display = engine === 'client' ? 'flex' : 'none';
-
             if (originalImage) processImage();
         }
 
-        // Set View Mode (Processed / Split / Original)
+        // Set View Mode
         function setViewMode(mode) {
             document.getElementById('viewProcessedBtn').classList.toggle('active', mode === 'processed');
             document.getElementById('viewSplitBtn').classList.toggle('active', mode === 'split');
-            document.getElementById('viewOriginalBtn').classList.toggle('active', mode === 'original');
 
             if (mode === 'split') {
                 mainCanvas.style.display = 'none';
                 splitSlider.style.display = 'block';
-            } else if (mode === 'original') {
-                splitSlider.style.display = 'none';
-                mainCanvas.style.display = 'block';
-                const ctx = mainCanvas.getContext('2d');
-                ctx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
-                ctx.drawImage(originalImage, 0, 0);
             } else {
                 splitSlider.style.display = 'none';
                 mainCanvas.style.display = 'block';
@@ -1218,30 +1603,163 @@
         function setBackgroundMode(mode, element, value = '') {
             currentBgMode = mode;
             bgStyleValue = value;
-
             if (element) {
                 document.querySelectorAll('.bg-preset-swatch').forEach(s => s.classList.remove('active'));
                 element.classList.add('active');
             }
-
             renderMainStage();
         }
 
-        function triggerCustomBgPicker() {
-            document.getElementById('bgImageInput').click();
+        // Transform Flips
+        function flipImage(dir) {
+            if (dir === 'h') flipH = !flipH;
+            if (dir === 'v') flipV = !flipV;
+            renderMainStage();
         }
 
-        // Download Image Result
+        // Undo / Redo History System
+        function saveState() {
+            if (!maskCanvas) return;
+            const ctx = maskCanvas.getContext('2d');
+            const imgData = ctx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
+            
+            // Remove future states if we drew after an undo
+            if (historyIndex < historyStack.length - 1) {
+                historyStack.splice(historyIndex + 1);
+            }
+
+            historyStack.push(imgData);
+            if (historyStack.length > MAX_HISTORY) historyStack.shift();
+            historyIndex = historyStack.length - 1;
+            updateHistoryButtons();
+        }
+
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                const imgData = historyStack[historyIndex];
+                maskCanvas.getContext('2d').putImageData(imgData, 0, 0);
+                renderMainStage();
+                updateHistoryButtons();
+                showToast('Undo performed', 'info');
+            }
+        }
+
+        function redo() {
+            if (historyIndex < historyStack.length - 1) {
+                historyIndex++;
+                const imgData = historyStack[historyIndex];
+                maskCanvas.getContext('2d').putImageData(imgData, 0, 0);
+                renderMainStage();
+                updateHistoryButtons();
+                showToast('Redo performed', 'info');
+            }
+        }
+
+        function updateHistoryButtons() {
+            document.getElementById('undoBtn').disabled = historyIndex <= 0;
+            document.getElementById('redoBtn').disabled = historyIndex >= historyStack.length - 1;
+        }
+
+        // Keyboard Shortcuts Handler
+        function setupKeyboardShortcuts() {
+            window.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT') return;
+                
+                if (e.key === 'b' || e.key === 'B') setActiveTool('restore');
+                if (e.key === 'e' || e.key === 'E') setActiveTool('erase');
+                if (e.key === 'm' || e.key === 'M') setActiveTool('select');
+                if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
+                if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
+                if (e.ctrlKey && e.key === 'c') { e.preventDefault(); copyToClipboard(); }
+            });
+        }
+
+        // Export Functionality
         function downloadResult() {
             if (!mainCanvas) return;
+            const format = document.getElementById('exportFormat').value;
+            const scale = parseInt(document.getElementById('exportScale').value, 10);
+
+            let exportCanvas = mainCanvas;
+            if (scale > 1) {
+                exportCanvas = document.createElement('canvas');
+                exportCanvas.width = mainCanvas.width * scale;
+                exportCanvas.height = mainCanvas.height * scale;
+                const eCtx = exportCanvas.getContext('2d');
+                eCtx.imageSmoothingEnabled = true;
+                eCtx.imageSmoothingQuality = 'high';
+                eCtx.drawImage(mainCanvas, 0, 0, exportCanvas.width, exportCanvas.height);
+            }
+
+            const mime = format === 'jpeg' ? 'image/jpeg' : (format === 'webp' ? 'image/webp' : 'image/png');
             const link = document.createElement('a');
-            link.download = `chromaerase-${Date.now()}.png`;
-            link.href = mainCanvas.toDataURL('image/png');
+            link.download = `chromaerase-${Date.now()}.${format}`;
+            link.href = exportCanvas.toDataURL(mime, 0.95);
             link.click();
-            showToast('Image downloaded successfully!', 'success');
+            showToast(`Exported ${format.toUpperCase()} (${scale}x HD)!`, 'success');
         }
 
-        // Toast Notification System
+        // Copy Image directly to System Clipboard
+        async function copyToClipboard() {
+            if (!mainCanvas) return;
+            try {
+                mainCanvas.toBlob(async (blob) => {
+                    await navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]);
+                    showToast('Image copied to clipboard!', 'success');
+                }, 'image/png');
+            } catch (err) {
+                showToast('Clipboard copy failed. PNG download instead.', 'error');
+            }
+        }
+
+        // Split View Slider Dragging
+        function setupSplitSlider() {
+            let isDragging = false;
+            const viewport = document.getElementById('canvasViewport');
+
+            viewport.addEventListener('mousedown', (e) => {
+                if (splitSlider.style.display === 'block') {
+                    isDragging = true;
+                    updateSplit(e);
+                }
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (isDragging) updateSplit(e);
+            });
+
+            window.addEventListener('mouseup', () => { isDragging = false; });
+        }
+
+        function updateSplit(e) {
+            const rect = document.getElementById('canvasViewport').getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            if (x < 0) x = 0; if (x > rect.width) x = rect.width;
+            const pct = (x / rect.width) * 100;
+            splitAfterWrap.style.width = pct + '%';
+            sliderHandle.style.left = pct + '%';
+        }
+
+        // Reset Workspace
+        function resetWorkspace() {
+            originalImage = null;
+            workspace.style.display = 'none';
+            heroSection.style.display = 'block';
+            fileInput.value = '';
+        }
+
+        function closeApiModal() { document.getElementById('apiModal').style.display = 'none'; }
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            removeBgApiKey = key;
+            localStorage.setItem('remove_bg_api_key', key);
+            closeApiModal();
+            showToast('API Key saved locally!', 'success');
+        }
+
         function showToast(message, type = 'info') {
             toastMsg.textContent = message;
             toast.className = 'toast show';
@@ -1255,33 +1773,9 @@
                 document.getElementById('toastIcon').className = 'fa-solid fa-circle-info';
                 document.getElementById('toastIcon').style.color = '#6366f1';
             }
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+            setTimeout(() => { toast.classList.remove('show'); }, 3200);
         }
 
-        // Reset Workspace
-        function resetWorkspace() {
-            originalImage = null;
-            workspace.style.display = 'none';
-            heroSection.style.display = 'block';
-            fileInput.value = '';
-        }
-
-        // API Key Modal Controls
-        function closeApiModal() {
-            document.getElementById('apiModal').style.display = 'none';
-        }
-
-        function saveApiKey() {
-            const key = document.getElementById('apiKeyInput').value.trim();
-            removeBgApiKey = key;
-            localStorage.setItem('remove_bg_api_key', key);
-            closeApiModal();
-            showToast('API key saved locally!', 'success');
-        }
-
-        // Start Application
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
