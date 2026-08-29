@@ -3,214 +3,1286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Calculator</title>
+    <title>ChromaErase Pro - AI & In-Browser Background Remover</title>
+    <meta name="description" content="Remove backgrounds from images instantly online using in-browser smart canvas keying or cloud AI. Free, fast, privacy-focused image background remover with live background replacement.">
+    <meta name="keywords" content="background remover, remove bg, transparent background, image editing, canvas bg removal, free online bg remover">
+    
+    <!-- OpenGraph Tags -->
+    <meta property="og:title" content="ChromaErase Pro - Background Removal Tool">
+    <meta property="og:description" content="Instant image background removal in your browser with live split-screen preview and background replacement suite.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --surface-card: rgba(18, 24, 38, 0.75);
+            --surface-border: rgba(255, 255, 255, 0.1);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
         }
 
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
-            background: #000;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        .calculator {
-            background: #111;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(255, 20, 147, 0.2);
-            width: 320px;
+        /* Navbar Header */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2.5rem;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--surface-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .display {
-            background: #222;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: right;
-            color: #fff;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
         }
 
-        #equation {
-            font-size: 18px;
-            color: #ff1493;
-            min-height: 24px;
-            margin-bottom: 8px;
-            opacity: 0.7;
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
-        #current {
-            font-size: 36px;
-            font-weight: bold;
+        .brand-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        button {
-            border: none;
-            padding: 20px;
-            font-size: 18px;
-            border-radius: 10px;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--surface-border);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fff;
-            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-fast);
         }
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.3);
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
         }
 
-        .operator {
-            background: #ff1493;
+        /* Main Container Layout */
+        .app-container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Hero Banner */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 640px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Dropzone Upload Section */
+        .dropzone-card {
+            background: var(--surface-card);
+            border: 2px dashed rgba(99, 102, 241, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 3.5rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            transition: var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .dropzone-card:hover, .dropzone-card.drag-over {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateY(-3px);
+            box-shadow: 0 25px 50px rgba(16, 185, 129, 0.15);
+        }
+
+        .upload-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 1.25rem;
+            transition: var(--transition-fast);
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        .dropzone-card:hover .upload-icon-wrapper {
+            transform: scale(1.1) rotate(-5deg);
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #4f46e5);
+            color: white;
+            border: none;
+            padding: 0.85rem 2.25rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px var(--primary-glow);
+            transition: var(--transition-fast);
+            margin-top: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+            background: linear-gradient(135deg, #6366f1, #4338ca);
+        }
+
+        /* Sample Images Bar */
+        .sample-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sample-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .sample-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--surface-border);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sample-chip:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
             color: white;
         }
 
-        .special {
-            background: #333;
+        /* Main Workspace Grid (Hidden until image loaded) */
+        .workspace {
+            display: none;
+            grid-template-columns: 1fr 340px;
+            gap: 1.75rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Canvas Preview Stage */
+        .stage-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .stage-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-mode-toggle {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 4px;
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .toggle-btn.active {
+            background: var(--primary);
             color: white;
         }
 
-        .equals {
-            background: #000;
-            color: white;
+        /* Canvas Container & Split Slider */
+        .canvas-viewport {
+            min-height: 420px;
+            max-height: 560px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a202c;
+            background-image: 
+                linear-gradient(45deg, #2d3748 25%, transparent 25%), 
+                linear-gradient(-45deg, #2d3748 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #2d3748 75%), 
+                linear-gradient(-45deg, transparent 75%, #2d3748 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         }
 
-        .memory-btn {
-            grid-column: span 2;
+        .preview-canvas {
+            max-width: 100%;
+            max-height: 520px;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Split Slider Overlay */
+        .comparison-slider-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: none;
+        }
+
+        .split-image-before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        .split-image-after-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 50%;
+            overflow: hidden;
+            border-right: 2px solid var(--accent);
+        }
+
+        .split-image-after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            cursor: ew-resize;
+            pointer-events: none;
+        }
+
+        /* Controls Panel */
+        .control-panel {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .control-slider {
+            width: 100%;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Mode Selector Tabs */
+        .tab-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.55rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        /* Background Replacement Grid */
+        .bg-presets-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .bg-preset-swatch {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .bg-preset-swatch.active {
+            border-color: var(--accent);
+            transform: scale(1.1);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* Action Buttons */
+        .download-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 0.5rem;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent), #059669);
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition-fast);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* API Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal-card {
+            background: #1e293b;
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-lg);
+            max-width: 480px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .input-field {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--surface-border);
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin: 0.75rem 0 1.25rem;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Notifications & Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1e293b;
+            border: 1px solid var(--primary);
+            color: white;
+            padding: 0.9rem 1.4rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 2000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition-normal);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 3rem;
         }
     </style>
 </head>
 <body>
-    <div class="calculator">
-        <div class="display">
-            <div id="equation"></div>
-            <div id="current">0</div>
+
+    <!-- Header Navbar -->
+    <header class="navbar">
+        <a href="#" class="brand">
+            <div class="brand-logo">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span class="brand-title">ChromaErase Pro</span>
+        </a>
+        <div class="nav-actions">
+            <button class="btn-secondary" id="apiKeySettingsBtn">
+                <i class="fa-solid fa-key"></i> Cloud API Key
+            </button>
+            <a href="https://github.com/Omkar4812x/Background-Removal-Tool" target="_blank" class="btn-secondary">
+                <i class="fa-brands fa-github"></i> GitHub Repository
+            </a>
         </div>
-        <div class="buttons">
-            <button class="special" onclick="clearAll()">AC</button>
-            <button class="special" onclick="toggleSign()">±</button>
-            <button class="special" onclick="percent()">%</button>
-            <button class="operator" onclick="setOperation('/')">÷</button>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="app-container">
+        
+        <!-- Hero Section -->
+        <section class="hero-section" id="heroSection">
+            <div class="hero-badge">
+                <i class="fa-solid fa-bolt"></i> 100% In-Browser & AI Cloud Engine
+            </div>
+            <h1 class="hero-title">Remove Backgrounds Instantly</h1>
+            <p class="hero-subtitle">Fast, high-resolution background removal with live color keying, custom background replacement, and zero server upload requirement.</p>
+
+            <!-- Dropzone Container -->
+            <div class="dropzone-card" id="dropzone">
+                <input type="file" id="fileInput" accept="image/png, image/jpeg, image/webp" style="display: none;">
+                <div class="upload-icon-wrapper">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">Drag & Drop your image here</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Supports PNG, JPG, WEBP up to 25MB</p>
+                <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                    <i class="fa-solid fa-folder-open"></i> Browse File
+                </button>
+            </div>
+
+            <!-- Demo Sample Chips -->
+            <div class="sample-bar">
+                <span class="sample-label">Or try a sample image:</span>
+                <button class="sample-chip" onclick="loadSampleImage('portrait')">
+                    <i class="fa-solid fa-user"></i> Portrait Sample
+                </button>
+                <button class="sample-chip" onclick="loadSampleImage('product')">
+                    <i class="fa-solid fa-box"></i> Product Sample
+                </button>
+                <button class="sample-chip" onclick="loadSampleImage('car')">
+                    <i class="fa-solid fa-car"></i> Vehicle Sample
+                </button>
+            </div>
+        </section>
+
+        <!-- Workspace Stage Grid (Hidden by default) -->
+        <section class="workspace" id="workspace">
             
-            <button class="memory-btn special" onclick="memoryAdd()">M+</button>
-            <button class="memory-btn special" onclick="memorySubtract()">M-</button>
-            
-            <button onclick="appendNumber('7')">7</button>
-            <button onclick="appendNumber('8')">8</button>
-            <button onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="setOperation('*')">×</button>
-            
-            <button onclick="appendNumber('4')">4</button>
-            <button onclick="appendNumber('5')">5</button>
-            <button onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="setOperation('-')">-</button>
-            
-            <button onclick="appendNumber('1')">1</button>
-            <button onclick="appendNumber('2')">2</button>
-            <button onclick="appendNumber('3')">3</button>
-            <button class="operator" onclick="setOperation('+')">+</button>
-            
-            <button onclick="appendNumber('0')">0</button>
-            <button onclick="appendNumber('.')">.</button>
-            <button class="operator" onclick="sqrt()">√</button>
-            <button class="operator equals" onclick="calculate()">=</button>
+            <!-- Canvas Stage Card -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-title">
+                        <i class="fa-solid fa-eye" style="color: var(--primary);"></i> Preview & Compare
+                    </div>
+                    <div class="view-mode-toggle">
+                        <button class="toggle-btn active" id="viewProcessedBtn" onclick="setViewMode('processed')">Processed</button>
+                        <button class="toggle-btn" id="viewSplitBtn" onclick="setViewMode('split')">Split View</button>
+                        <button class="toggle-btn" id="viewOriginalBtn" onclick="setViewMode('original')">Original</button>
+                    </div>
+                </div>
+
+                <div class="canvas-viewport" id="canvasViewport">
+                    <canvas id="mainCanvas" class="preview-canvas"></canvas>
+                    
+                    <!-- Split Comparison Container -->
+                    <div class="comparison-slider-container" id="splitSlider">
+                        <img id="splitOriginalImg" class="split-image-before" alt="Original">
+                        <div class="split-image-after-wrap" id="splitAfterWrap">
+                            <canvas id="splitCanvas" class="split-image-after"></canvas>
+                        </div>
+                        <div class="slider-handle" id="sliderHandle">
+                            <i class="fa-solid fa-arrows-left-right" style="font-size: 0.8rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls Sidebar Panel -->
+            <aside class="control-panel">
+                <div class="panel-title">
+                    <i class="fa-solid fa-sliders" style="color: var(--accent);"></i> Removal Controls
+                </div>
+
+                <!-- Removal Engine Tab -->
+                <div class="control-group">
+                    <span class="control-label">Removal Engine</span>
+                    <div class="tab-selector">
+                        <button class="tab-btn active" id="engineClientBtn" onclick="setEngine('client')">Client Canvas</button>
+                        <button class="tab-btn" id="engineCloudBtn" onclick="setEngine('cloud')">Remove.bg API</button>
+                    </div>
+                </div>
+
+                <!-- Tolerance Slider (Client Engine) -->
+                <div class="control-group" id="toleranceGroup">
+                    <div class="control-label">
+                        <span>Background Sensitivity</span>
+                        <span id="toleranceVal">35</span>
+                    </div>
+                    <input type="range" class="control-slider" id="toleranceSlider" min="5" max="100" value="35">
+                </div>
+
+                <!-- Edge Smoothing Slider -->
+                <div class="control-group" id="featherGroup">
+                    <div class="control-label">
+                        <span>Edge Smoothness</span>
+                        <span id="featherVal">2px</span>
+                    </div>
+                    <input type="range" class="control-slider" id="featherSlider" min="0" max="10" value="2">
+                </div>
+
+                <!-- Background Replacement Section -->
+                <div class="control-group" style="margin-top: 0.5rem;">
+                    <span class="control-label">Replace Background</span>
+                    <div class="bg-presets-grid">
+                        <div class="bg-preset-swatch active" style="background: repeating-conic-gradient(#334155 0% 25%, #1e293b 0% 50%) 50% / 12px 12px;" onclick="setBackgroundMode('transparent', this)" title="Transparent"></div>
+                        <div class="bg-preset-swatch" style="background: #ffffff;" onclick="setBackgroundMode('solid', this, '#ffffff')" title="Pure White"></div>
+                        <div class="bg-preset-swatch" style="background: #0f172a;" onclick="setBackgroundMode('solid', this, '#0f172a')" title="Dark Slate"></div>
+                        <div class="bg-preset-swatch" style="background: linear-gradient(135deg, #6366f1, #ec4899);" onclick="setBackgroundMode('gradient', this, 'linear-gradient(135deg, #6366f1, #ec4899)')" title="Neon Gradient"></div>
+                        <div class="bg-preset-swatch" style="background: linear-gradient(135deg, #10b981, #06b6d4);" onclick="setBackgroundMode('gradient', this, 'linear-gradient(135deg, #10b981, #06b6d4)')" title="Emerald Wave"></div>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <input type="color" id="customColorPicker" value="#6366f1" style="width: 40px; height: 36px; border: none; border-radius: 6px; cursor: pointer; background: transparent;">
+                        <button class="btn-secondary" style="flex: 1; font-size: 0.8rem;" onclick="triggerCustomBgPicker()">
+                            <i class="fa-solid fa-image"></i> Upload Bg Image
+                        </button>
+                        <input type="file" id="bgImageInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
+                <!-- Export & Actions -->
+                <div class="download-actions">
+                    <button class="btn-success" id="downloadBtn">
+                        <i class="fa-solid fa-download"></i> Export Image (PNG)
+                    </button>
+                    <button class="btn-secondary" style="justify-content: center;" onclick="resetWorkspace()">
+                        <i class="fa-solid fa-rotate-left"></i> Upload New Image
+                    </button>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <!-- API Settings Modal -->
+    <div class="modal-overlay" id="apiModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-key" style="color: var(--primary);"></i> Remove.bg API Key</h3>
+                <button class="btn-secondary" style="padding: 0.3rem 0.6rem;" onclick="closeApiModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+                To use Cloud AI background removal, enter your free Remove.bg API key. The key is stored locally in your browser.
+            </p>
+            <input type="text" class="input-field" id="apiKeyInput" placeholder="Paste your Remove.bg API Key here...">
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn-secondary" onclick="closeApiModal()">Cancel</button>
+                <button class="btn-primary" style="margin: 0; padding: 0.6rem 1.4rem;" onclick="saveApiKey()">Save Key</button>
+            </div>
         </div>
     </div>
 
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check" id="toastIcon" style="color: var(--accent); font-size: 1.2rem;"></i>
+        <span id="toastMsg">Action completed successfully!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>ChromaErase Pro &copy; 2026. Part of the Open Source Web Applications Collection.</p>
+    </footer>
+
+    <!-- Application Script -->
     <script>
-        let current = '0';
-        let equation = '';
-        let previous = null;
-        let operation = null;
-        let memory = 0;
+        // DOM Elements
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const heroSection = document.getElementById('heroSection');
+        const workspace = document.getElementById('workspace');
+        const mainCanvas = document.getElementById('mainCanvas');
+        const splitCanvas = document.getElementById('splitCanvas');
+        const splitOriginalImg = document.getElementById('splitOriginalImg');
+        const splitSlider = document.getElementById('splitSlider');
+        const splitAfterWrap = document.getElementById('splitAfterWrap');
+        const sliderHandle = document.getElementById('sliderHandle');
+        const toleranceSlider = document.getElementById('toleranceSlider');
+        const toleranceVal = document.getElementById('toleranceVal');
+        const featherSlider = document.getElementById('featherSlider');
+        const featherVal = document.getElementById('featherVal');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
 
-        function updateDisplay() {
-            document.getElementById('current').textContent = current;
-            document.getElementById('equation').textContent = equation;
+        // State variables
+        let originalImage = null;
+        let processedCanvas = document.createElement('canvas');
+        let currentEngine = 'client'; // 'client' or 'cloud'
+        let currentBgMode = 'transparent'; // 'transparent', 'solid', 'gradient', 'image'
+        let bgStyleValue = '';
+        let customBgImage = null;
+        let removeBgApiKey = localStorage.getItem('remove_bg_api_key') || '';
+
+        // Initialize Event Listeners
+        function init() {
+            // Drag and Drop
+            ['dragenter', 'dragover'].forEach(name => {
+                dropzone.addEventListener(name, (e) => {
+                    e.preventDefault();
+                    dropzone.classList.add('drag-over');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(name => {
+                dropzone.addEventListener(name, (e) => {
+                    e.preventDefault();
+                    dropzone.classList.remove('drag-over');
+                });
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const file = e.dataTransfer.files[0];
+                if (file) handleFileUpload(file);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files[0]) handleFileUpload(e.target.files[0]);
+            });
+
+            // Sliders
+            toleranceSlider.addEventListener('input', (e) => {
+                toleranceVal.textContent = e.target.value;
+                if (originalImage && currentEngine === 'client') processClientRemoval();
+            });
+
+            featherSlider.addEventListener('input', (e) => {
+                featherVal.textContent = e.target.value + 'px';
+                if (originalImage && currentEngine === 'client') processClientRemoval();
+            });
+
+            // Custom Color Picker
+            document.getElementById('customColorPicker').addEventListener('input', (e) => {
+                setBackgroundMode('solid', null, e.target.value);
+            });
+
+            // Custom BG Image Picker
+            document.getElementById('bgImageInput').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            customBgImage = img;
+                            setBackgroundMode('image', null);
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Download Handler
+            downloadBtn.addEventListener('click', downloadResult);
+
+            // API Modal
+            document.getElementById('apiKeySettingsBtn').addEventListener('click', () => {
+                document.getElementById('apiKeyInput').value = removeBgApiKey;
+                document.getElementById('apiModal').style.display = 'flex';
+            });
+
+            // Split View Slider Dragging
+            let isDraggingSlider = false;
+            const viewport = document.getElementById('canvasViewport');
+            
+            viewport.addEventListener('mousedown', (e) => {
+                if (document.getElementById('splitSlider').style.display === 'block') {
+                    isDraggingSlider = true;
+                    updateSplitPosition(e);
+                }
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (isDraggingSlider) updateSplitPosition(e);
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDraggingSlider = false;
+            });
         }
 
-        function appendNumber(num) {
-            if (current === '0' && num !== '.') {
-                current = num;
+        function updateSplitPosition(e) {
+            const rect = canvasViewport.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            if (x < 0) x = 0;
+            if (x > rect.width) x = rect.width;
+            const pct = (x / rect.width) * 100;
+            splitAfterWrap.style.width = pct + '%';
+            sliderHandle.style.left = pct + '%';
+        }
+
+        // File Upload Handler
+        function handleFileUpload(file) {
+            if (!file.type.startsWith('image/')) {
+                showToast('Please upload a valid image file (PNG, JPG, WEBP).', 'error');
+                return;
+            }
+
+            showToast('Loading image...', 'info');
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    originalImage = img;
+                    splitOriginalImg.src = img.src;
+                    heroSection.style.display = 'none';
+                    workspace.style.display = 'grid';
+                    processImage();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Sample Image Loader
+        function loadSampleImage(type) {
+            let svgString = '';
+            if (type === 'portrait') {
+                svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+                    <rect width="800" height="800" fill="#3b82f6"/>
+                    <circle cx="400" cy="300" r="140" fill="#fde047"/>
+                    <path d="M 200 700 C 200 500, 600 500, 600 700 Z" fill="#ef4444"/>
+                </svg>`;
+            } else if (type === 'product') {
+                svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+                    <rect width="800" height="800" fill="#10b981"/>
+                    <rect x="250" y="250" width="300" height="300" rx="30" fill="#ffffff" transform="rotate(15 400 400)"/>
+                    <circle cx="400" cy="400" r="80" fill="#6366f1"/>
+                </svg>`;
             } else {
-                current += num;
+                svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+                    <rect width="800" height="800" fill="#f43f5e"/>
+                    <polygon points="400,200 600,600 200,600" fill="#06b6d4"/>
+                </svg>`;
             }
-            updateDisplay();
+
+            const img = new Image();
+            img.onload = () => {
+                originalImage = img;
+                splitOriginalImg.src = img.src;
+                heroSection.style.display = 'none';
+                workspace.style.display = 'grid';
+                processImage();
+            };
+            img.src = 'data:image/svg+xml;base64,' + btoa(svgString);
         }
 
-        function setOperation(op) {
-            if (operation !== null) calculate();
-            previous = current;
-            operation = op;
-            equation = previous + ' ' + op;
-            current = '0';
-            updateDisplay();
-        }
-
-        function calculate() {
-            let result;
-            const prev = parseFloat(previous);
-            const curr = parseFloat(current);
-            
-            switch(operation) {
-                case '+': result = prev + curr; break;
-                case '-': result = prev - curr; break;
-                case '*': result = prev * curr; break;
-                case '/': result = prev / curr; break;
+        // Process Image Decision
+        function processImage() {
+            if (currentEngine === 'client') {
+                processClientRemoval();
+            } else {
+                processCloudRemoval();
             }
+        }
+
+        // In-Browser Client Canvas Background Removal Engine
+        function processClientRemoval() {
+            if (!originalImage) return;
+
+            const w = originalImage.naturalWidth || originalImage.width;
+            const h = originalImage.naturalHeight || originalImage.height;
+
+            // Setup processing canvas
+            processedCanvas.width = w;
+            processedCanvas.height = h;
+            const ctx = processedCanvas.getContext('2d');
+            ctx.drawImage(originalImage, 0, 0);
+
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const data = imgData.data;
+
+            // Sample corner pixels to determine background key color
+            const corners = [
+                [0, 0],
+                [w - 1, 0],
+                [0, h - 1],
+                [w - 1, h - 1]
+            ];
+
+            let bgR = 0, bgG = 0, bgB = 0;
+            corners.forEach(([x, y]) => {
+                const idx = (y * w + x) * 4;
+                bgR += data[idx];
+                bgG += data[idx + 1];
+                bgB += data[idx + 2];
+            });
+            bgR = Math.round(bgR / 4);
+            bgG = Math.round(bgG / 4);
+            bgB = Math.round(bgB / 4);
+
+            const tolerance = parseInt(toleranceSlider.value, 10);
+            const feather = parseInt(featherSlider.value, 10);
+
+            // Color Euclidean Distance Keying
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+
+                const distance = Math.sqrt(
+                    (r - bgR) ** 2 +
+                    (g - bgG) ** 2 +
+                    (b - bgB) ** 2
+                );
+
+                if (distance < tolerance) {
+                    data[i + 3] = 0; // Set Alpha to 0
+                } else if (distance < tolerance + feather * 8) {
+                    // Smooth alpha transition
+                    const alphaRatio = (distance - tolerance) / (feather * 8);
+                    data[i + 3] = Math.floor(alphaRatio * 255);
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+            renderMainStage();
+        }
+
+        // Cloud API Removal Engine
+        async function processCloudRemoval() {
+            if (!removeBgApiKey) {
+                showToast('Please enter your Remove.bg API key in settings.', 'error');
+                document.getElementById('apiModal').style.display = 'flex';
+                setEngine('client');
+                return;
+            }
+
+            showToast('Processing via Remove.bg Cloud AI...', 'info');
+
+            // Convert canvas to blob for form data
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = originalImage.width;
+            tempCanvas.height = originalImage.height;
+            tempCanvas.getContext('2d').drawImage(originalImage, 0, 0);
             
-            equation = '';
-            operation = null;
-            previous = null;
-            current = result.toString();
-            updateDisplay();
+            tempCanvas.toBlob(async (blob) => {
+                try {
+                    const formData = new FormData();
+                    formData.append('image_file', blob, 'upload.png');
+                    formData.append('size', 'auto');
+
+                    const res = await fetch('https://api.remove.bg/v1.0/removebg', {
+                        method: 'POST',
+                        headers: { 'X-Api-Key': removeBgApiKey },
+                        body: formData
+                    });
+
+                    if (!res.ok) throw new Error('API request failed. Check key & quota.');
+
+                    const resBlob = await res.blob();
+                    const imgUrl = URL.createObjectURL(resBlob);
+                    const cloudImg = new Image();
+                    cloudImg.onload = () => {
+                        processedCanvas.width = cloudImg.width;
+                        processedCanvas.height = cloudImg.height;
+                        processedCanvas.getContext('2d').drawImage(cloudImg, 0, 0);
+                        renderMainStage();
+                        showToast('Background removed via Cloud AI!', 'success');
+                    };
+                    cloudImg.src = imgUrl;
+
+                } catch (err) {
+                    showToast(err.message || 'Cloud removal error', 'error');
+                    setEngine('client');
+                }
+            }, 'image/png');
         }
 
-        function clearAll() {
-            current = '0';
-            equation = '';
-            previous = null;
-            operation = null;
-            updateDisplay();
+        // Render Final Composite Canvas on Stage
+        function renderMainStage() {
+            if (!originalImage) return;
+
+            const w = processedCanvas.width;
+            const h = processedCanvas.height;
+
+            mainCanvas.width = w;
+            mainCanvas.height = h;
+            splitCanvas.width = w;
+            splitCanvas.height = h;
+
+            const ctx = mainCanvas.getContext('2d');
+            const splitCtx = splitCanvas.getContext('2d');
+
+            ctx.clearRect(0, 0, w, h);
+            splitCtx.clearRect(0, 0, w, h);
+
+            // Draw Background according to selected mode
+            if (currentBgMode === 'solid') {
+                ctx.fillStyle = bgStyleValue;
+                ctx.fillRect(0, 0, w, h);
+                splitCtx.fillStyle = bgStyleValue;
+                splitCtx.fillRect(0, 0, w, h);
+            } else if (currentBgMode === 'gradient') {
+                const grad = ctx.createLinearGradient(0, 0, w, h);
+                grad.addColorStop(0, '#6366f1');
+                grad.addColorStop(1, '#10b981');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, w, h);
+                splitCtx.fillStyle = grad;
+                splitCtx.fillRect(0, 0, w, h);
+            } else if (currentBgMode === 'image' && customBgImage) {
+                ctx.drawImage(customBgImage, 0, 0, w, h);
+                splitCtx.drawImage(customBgImage, 0, 0, w, h);
+            }
+
+            // Draw Subject Image
+            ctx.drawImage(processedCanvas, 0, 0);
+            splitCtx.drawImage(processedCanvas, 0, 0);
         }
 
-        function toggleSign() {
-            current = (parseFloat(current) * -1).toString();
-            updateDisplay();
+        // Set Engine Mode
+        function setEngine(engine) {
+            currentEngine = engine;
+            document.getElementById('engineClientBtn').classList.toggle('active', engine === 'client');
+            document.getElementById('engineCloudBtn').classList.toggle('active', engine === 'cloud');
+            
+            document.getElementById('toleranceGroup').style.display = engine === 'client' ? 'flex' : 'none';
+            document.getElementById('featherGroup').style.display = engine === 'client' ? 'flex' : 'none';
+
+            if (originalImage) processImage();
         }
 
-        function percent() {
-            current = (parseFloat(current) / 100).toString();
-            updateDisplay();
+        // Set View Mode (Processed / Split / Original)
+        function setViewMode(mode) {
+            document.getElementById('viewProcessedBtn').classList.toggle('active', mode === 'processed');
+            document.getElementById('viewSplitBtn').classList.toggle('active', mode === 'split');
+            document.getElementById('viewOriginalBtn').classList.toggle('active', mode === 'original');
+
+            if (mode === 'split') {
+                mainCanvas.style.display = 'none';
+                splitSlider.style.display = 'block';
+            } else if (mode === 'original') {
+                splitSlider.style.display = 'none';
+                mainCanvas.style.display = 'block';
+                const ctx = mainCanvas.getContext('2d');
+                ctx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+                ctx.drawImage(originalImage, 0, 0);
+            } else {
+                splitSlider.style.display = 'none';
+                mainCanvas.style.display = 'block';
+                renderMainStage();
+            }
         }
 
-        function sqrt() {
-            current = Math.sqrt(parseFloat(current)).toString();
-            updateDisplay();
+        // Set Background Replacement Mode
+        function setBackgroundMode(mode, element, value = '') {
+            currentBgMode = mode;
+            bgStyleValue = value;
+
+            if (element) {
+                document.querySelectorAll('.bg-preset-swatch').forEach(s => s.classList.remove('active'));
+                element.classList.add('active');
+            }
+
+            renderMainStage();
         }
 
-        function memoryAdd() {
-            memory += parseFloat(current);
+        function triggerCustomBgPicker() {
+            document.getElementById('bgImageInput').click();
         }
 
-        function memorySubtract() {
-            memory -= parseFloat(current);
+        // Download Image Result
+        function downloadResult() {
+            if (!mainCanvas) return;
+            const link = document.createElement('a');
+            link.download = `chromaerase-${Date.now()}.png`;
+            link.href = mainCanvas.toDataURL('image/png');
+            link.click();
+            showToast('Image downloaded successfully!', 'success');
         }
 
-        // Initialize display
-        updateDisplay();
+        // Toast Notification System
+        function showToast(message, type = 'info') {
+            toastMsg.textContent = message;
+            toast.className = 'toast show';
+            if (type === 'error') {
+                document.getElementById('toastIcon').className = 'fa-solid fa-circle-exclamation';
+                document.getElementById('toastIcon').style.color = '#ef4444';
+            } else if (type === 'success') {
+                document.getElementById('toastIcon').className = 'fa-solid fa-circle-check';
+                document.getElementById('toastIcon').style.color = '#10b981';
+            } else {
+                document.getElementById('toastIcon').className = 'fa-solid fa-circle-info';
+                document.getElementById('toastIcon').style.color = '#6366f1';
+            }
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // Reset Workspace
+        function resetWorkspace() {
+            originalImage = null;
+            workspace.style.display = 'none';
+            heroSection.style.display = 'block';
+            fileInput.value = '';
+        }
+
+        // API Key Modal Controls
+        function closeApiModal() {
+            document.getElementById('apiModal').style.display = 'none';
+        }
+
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            removeBgApiKey = key;
+            localStorage.setItem('remove_bg_api_key', key);
+            closeApiModal();
+            showToast('API key saved locally!', 'success');
+        }
+
+        // Start Application
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
