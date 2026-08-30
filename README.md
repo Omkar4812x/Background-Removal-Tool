@@ -1,68 +1,59 @@
-# 🪄 ChromaErase Pro v2.0 - AI & In-Browser Background Removal Studio
+# 🖼️ ChromaErase Pro v2.0 - Background Removal Studio
 
-**ChromaErase Pro v2.0** is an open-source, ultra-fast background removal and photo editing studio. It combines automatic canvas color-keying, cloud AI background removal, manual touch-up brushes (Erase & Restore), a subject drop shadow generator, image filters, and multi-scale HD export into a single 100% in-browser web application.
-
----
-
-## ✨ Key Features in v2.0 Pro
-
-- ⚡ **Dual Engine Background Removal**:
-  - **Client Canvas Engine**: 100% local, offline Euclidean color-distance keying algorithm with adjustable sensitivity threshold.
-  - **Cloud AI Engine**: Integration with Remove.bg API for complex portrait matting.
-- 🖌️ **Manual Touch-Up Tools**:
-  - **Erase Brush**: Manually remove unwanted background spots or stray edges.
-  - **Restore Brush**: Bring back accidentally erased subject details.
-  - Adjustable **Brush Size** (5px–120px) and **Brush Hardness/Softness** with a live ring indicator.
-- ☀️ **Subject Drop Shadow Generator**:
-  - Add realistic drop shadows with custom blur radius, X/Y offsets, shadow color picker, and opacity controls.
-- 🎛️ **Image Adjustments & Filters**:
-  - Fine-tune extracted subject brightness, contrast, and color saturation.
-- 🔄 **Canvas Flip & Transform**:
-  - Instant Flip Horizontal and Flip Vertical controls.
-- ⏪ **Undo / Redo History Stack**:
-  - Full edit history stack (`Ctrl+Z` / `Ctrl+Y`) for all brush strokes and mask adjustments.
-- 📋 **Advanced HD Export & Copy to Clipboard**:
-  - Export formats: **PNG** (lossless transparent), **JPEG**, **WEBP**.
-  - Resolution scaling: **1x Original**, **2x HD**, **4x 4K Resolution**.
-  - **1-Click Copy to Clipboard**: Copy transparent PNG directly to system clipboard for instant pasting into Canva, Photoshop, or messaging apps.
+> **Professional in-browser image background removal studio featuring manual erase & restore brushes, drop shadow generator, background replacement, and HD export with 100% privacy.**
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## ✨ Key Features
 
-| Shortcut | Action |
-| :--- | :--- |
-| `E` | Switch to **Manual Erase Brush** |
-| `B` | Switch to **Manual Restore Brush** |
-| `M` | Switch to **Auto Mode / View Pointer** |
-| `Ctrl + Z` | **Undo** last action |
-| `Ctrl + Y` | **Redo** action |
-| `Ctrl + C` | **Copy Image to Clipboard** |
+- ⚡ **Smart Background Extraction**
+  - Instant background removal using auto color keying algorithms and optional cloud API integration.
+  - Supports PNG, JPEG, and WEBP images up to 25MB.
+
+- 🖌️ **Manual Touch-Up Brush Suite**
+  - **Erase Brush**: Precision manual erase brush to remove stubborn background artifacts.
+  - **Restore Brush**: Paint back masked foreground details with pixel accuracy.
+  - Adjustable brush size and edge softness sliders with real-time cursor ring overlay.
+  - Full Undo / Redo history stack (`Ctrl+Z` / `Ctrl+Y`).
+
+- 👁️ **Before / After Comparison Slider**
+  - Interactive split-screen comparison slider to inspect extracted edges against original image.
+
+- 🎨 **Background Replacement & Customization**
+  - **Transparent Canvas**: Export clean transparent PNGs for e-commerce and graphics design.
+  - **Solid Color & Gradient Presets**: Swap backgrounds instantly with curated color palettes and smooth gradients.
+  - **Custom Background Image**: Upload custom background backdrops.
+
+- ⚙️ **Subject Filters & Drop Shadows**
+  - **Drop Shadow Generator**: Add realistic drop shadows with blur radius, opacity, and offset controls.
+  - **Subject Image Adjustments**: Fine-tune Brightness, Contrast, Saturation, and Sharpness.
+
+- 💾 **HD Export Options**
+  - Export refined images in PNG, JPEG, or WEBP formats with custom quality and resolution settings.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Core**: HTML5, Vanilla JavaScript (ES6+), CSS3 (Custom Variables, Flexbox, Grid).
-- **Engine**: HTML5 2D Canvas API (ImageData manipulation, radial gradient mask drawing, shadow filters).
-- **Design System**: Dark glassmorphic aesthetic, FontAwesome 6, Google Fonts (*Plus Jakarta Sans*, *Inter*).
+- **Core**: HTML5, Vanilla JavaScript (ES6+), Canvas API
+- **Styling**: Modern CSS with CSS Variables, HSL dark mode palette, Glassmorphism, FontAwesome 6 icons
+- **Privacy**: 100% in-browser processing without mandatory server uploads
 
 ---
 
 ## 🚀 Getting Started
 
-```bash
-# Clone the repository
-git clone https://github.com/Omkar4812x/Background-Removal-Tool.git
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Omkar4812x/Background-Removal-Tool.git
+   cd Background-Removal-Tool
+   ```
 
-# Navigate to the folder
-cd Background-Removal-Tool
-
-# Open index.html in any modern browser
-```
+2. **Launch Application**:
+   Simply open `index.html` in any modern web browser or serve via Live Server.
 
 ---
 
 ## 📄 License
 
-Maintained as part of the Web Applications collection under the MIT License.
+Distributed under the MIT License.
